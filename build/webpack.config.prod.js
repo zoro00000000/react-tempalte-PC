@@ -23,7 +23,8 @@ const webpackConfigProd = merge(baseWebpackConfig, {
     // webpack4 性能优化
     optimization: { 
         runtimeChunk: {
-            name: 'runtime',
+            // name: 'runtime',
+            name: entrypoint => `runtimechunk~${entrypoint.name}`
         },
         minimizer: [
             // 压缩bundle, 定制 TerserPlugin 覆盖默认压缩工具（minimizer）
@@ -101,6 +102,11 @@ const webpackConfigProd = merge(baseWebpackConfig, {
         }),
         // 分析哪些文件体积过大
         new BundleAnalyzerPlugin(),
+        new webpack.DefinePlugin({
+            'process.env': {
+                'NODE_ENV': JSON.stringify('production')
+            }
+        }),
     ],
 })
 

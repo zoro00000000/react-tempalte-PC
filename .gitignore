@@ -1,0 +1,13 @@
+# 依赖包
+/node_modules
+
+# build 后 生产项目文件
+/dist
+
+# 配置文件
+.DS_Store
+
+package.json
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

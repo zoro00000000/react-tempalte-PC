@@ -14,9 +14,9 @@ class Counter extends Component {
         return (
             <div>
                 <div>当前计数为(显示redux计数)</div>
-                <Button onClick={() => {console.log('调用自增函数');}}>自增</Button>
-                <Button onClick={() => {console.log('调用自减函数');}}>自减</Button>
-                <Button onClick={() => {console.log('调用重置函数');}}>重置</Button>
+                <Button type="primary" onClick={() => {console.log('调用自增函数');}}>自增</Button>
+                <Button type="primary" onClick={() => {console.log('调用自减函数');}}>自减</Button>
+                <Button type="primary" onClick={() => {console.log('调用重置函数');}}>重置</Button>
             </div>
         )
     }

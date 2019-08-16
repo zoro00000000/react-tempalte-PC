@@ -6,7 +6,7 @@ const baseWebpackConfig = require('./webpack.config.base')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
 
-module.exports = merge(baseWebpackConfig, {
+const webpackConfigDev = merge(baseWebpackConfig, {
     mode: 'development',
     entry: [
         // react-hot-loader（jsx）热更新 额外处理
@@ -55,3 +55,5 @@ module.exports = merge(baseWebpackConfig, {
         proxy: {},
     }
 })
+
+module.exports = webpackConfigDev
