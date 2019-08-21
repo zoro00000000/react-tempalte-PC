@@ -10,7 +10,9 @@ import 'antd/dist/antd.css'
 
 
 // 引入路由
-import BasicRouter from '@routes/router'
+// import BasicRouter from '@routes/router'
+// 引入App
+import App from '@components/app/app'
 
 /*** *
  * !需放在最上部来初始化创建 id=root 的DOM
@@ -21,13 +23,13 @@ Div.setAttribute("id", "root")
 document.body.appendChild(Div)
 
 /*初始化*/
-renderWithHotReload(BasicRouter())
+renderWithHotReload(App)
 
 /*热更新*/
 if (module.hot) {
-    module.hot.accept('@routes/router', () => {
-        const basicRouter = require('@routes/router').default
-        renderWithHotReload(basicRouter())
+    module.hot.accept('@components/app/app', () => {
+        const NextApp = require('@components/app/app').default
+        renderWithHotReload(NextApp)
     })
 }
 
@@ -37,7 +39,7 @@ function renderWithHotReload(RootElement) {
         <AppContainer>
             {/* 绑定redux */}
             <Provider store={store}>
-                {RootElement}
+                <RootElement/>
             </Provider>
         </AppContainer>,
         document.getElementById('root')

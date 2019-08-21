@@ -19,6 +19,7 @@ module.exports = {
         filename: 'js/[name].[chunkhash].js',    // 使用hash进行标记
         path: DIST_PATH,
         chunkFilename: 'js/[name].[chunkhash].js',
+        // publicPath: '/',        // 将打包的静态文件 链接定位到静态服务器
     },
     module: {
         rules: [
@@ -63,28 +64,28 @@ module.exports = {
                 // 切记这个地方一定要引入antd，文档上没有写入但是一定要因引进去，切记切记
                 // include: [/antd/],
             },
-            // {
-            //     test: /\.scss$/,
-            //     use: [
-            //         {
-            //             loader: 'style-loader',
-            //         },
-            //         {
-            //             loader: 'css-loader',
-            //         },
-            //         {
-            //             loader: 'sass-loader',
-            //         },
-            //         {
-            //             loader: 'postcss-loader',
-            //             options: {
-            //                 plugins: [
-            //                     require('autoprefixer')({})
-            //                 ]
-            //             }
-            //         }
-            //     ]
-            // },
+            {
+                test: /\.scss$/,
+                use: [
+                    {
+                        loader: 'style-loader',
+                    },
+                    {
+                        loader: 'css-loader',
+                    },
+                    {
+                        loader: 'sass-loader',
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins: [
+                                require('autoprefixer')({})
+                            ]
+                        }
+                    }
+                ]
+            },
             {
                 test: /\.(png|jpg|gif)$/,
                 use: [{
@@ -111,6 +112,7 @@ module.exports = {
             '@page': path.resolve(__dirname, '../src/page'),
             '@routes': path.resolve(__dirname, '../src/routes'),
             '@redux': path.resolve(__dirname, '../src/redux'),
+            '@components': path.resolve(__dirname, '../src/components'),
         },
         extensions: ['.js', '.json', '.less']
     },

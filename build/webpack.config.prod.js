@@ -78,6 +78,14 @@ const webpackConfigProd = merge(baseWebpackConfig, {
                         },
                     },
                     'css-loader',
+                    {
+                        loader: 'postcss-loader',       // 自动加前缀
+                        options: {
+                            plugins: [
+                                require('autoprefixer')({})
+                            ]
+                        }
+                    }
                 ],
             },
         ]

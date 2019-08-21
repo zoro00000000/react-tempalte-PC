@@ -8,4 +8,5 @@ import combineReducers from './reducers'
  */
 let store = createStore(combineReducers, applyMiddleware(thunkMiddleware))
 
+
 export default store
