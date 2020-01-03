@@ -11,7 +11,6 @@ import {
 class UserInfo extends Component {
     render () {
         const {userInfo, isLoading, errorMsg} = this.props.userInfo
-        console.log(this.props)
 
         return (
             <div>

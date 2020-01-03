@@ -45,6 +45,7 @@ const webpackConfigDev = merge(baseWebpackConfig, {
     ],
     devServer: {
         port: '7777',
+        host: getIPAdress(),
         contentBase: path.join(__dirname, './public'),      // 告诉服务器从哪个目录中提供内容。只用在你想要提供静态文件时才需要。
         compress: true,         // 一切服务都启用gzip压缩
         historyApiFallback: true,       // 当使用HTML5历史API时，任意的404响应都可能需要被替代为index.html
@@ -55,5 +56,19 @@ const webpackConfigDev = merge(baseWebpackConfig, {
         proxy: {},
     }
 })
+
+// 获取本机ip的方法
+function getIPAdress () {
+    let interfaces = require('os').networkInterfaces()
+    for (let devName in interfaces) {
+        let iface = interfaces[devName]
+        for (let i = 0; i < iface.length; i++) {
+            let alias = iface[i]
+            if (alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal) {
+                return alias.address
+            }
+        }
+    }
+}
 
 module.exports = webpackConfigDev

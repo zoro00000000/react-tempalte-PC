@@ -6,6 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin")
 const TerserPlugin = require('terser-webpack-plugin')
 const devMode = process.env.NODE_ENV !== 'production'
 const webpack = require('webpack')
@@ -35,7 +36,8 @@ const webpackConfigProd = merge(baseWebpackConfig, {
                 terserOptions: {
                     // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
                 }
-            })
+            }),
+            new OptimizeCSSAssetsPlugin({})
         ],
         splitChunks:{       // 动态导入模块，webpack v4+ 全新的通用分块策略
             chunks: 'all',      // 哪些块进行优化，all、async、initial
@@ -77,7 +79,19 @@ const webpackConfigProd = merge(baseWebpackConfig, {
                             hmr: process.env.NODE_ENV === 'development',
                         },
                     },
-                    'css-loader',
+                    // 'css-loader',
+                    // ? 新增
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            importLoaders: 1,
+                            modules: true,
+                            sourceMap: true,
+                            modules: {
+                                localIdentName: '[path][name]__[local]--[hash:base64:5]',       // 配置 css className hash 唯一
+                            },
+                        }
+                    },
                     {
                         loader: 'postcss-loader',       // 自动加前缀
                         options: {
@@ -110,6 +124,15 @@ const webpackConfigProd = merge(baseWebpackConfig, {
         }),
         // 分析哪些文件体积过大
         new BundleAnalyzerPlugin(),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendor',
+            // filename: "vendor.js"
+            // (给 chunk 一个不同的名字)
+      
+            minChunks: Infinity,
+            // (随着 entry chunk 越来越多，
+            // 这个配置保证没其它的模块会打包进 vendor chunk)
+        }),
         new webpack.DefinePlugin({
             'process.env': {
                 'NODE_ENV': JSON.stringify('production')

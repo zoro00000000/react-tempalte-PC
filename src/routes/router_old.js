@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Redirect, Route, Link } from 'react-router-dom'
 import loadable from '@loadable/component'
 
 // import Home from '@page/home/home'

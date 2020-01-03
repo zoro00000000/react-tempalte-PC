@@ -8,5 +8,13 @@ import combineReducers from './reducers'
  */
 let store = createStore(combineReducers, applyMiddleware(thunkMiddleware))
 
+// redux 热更新替换
+if (module.hot) {
+    module.hot.accept("./reducers", () => {
+        const nextCombineReducers = require("./reducers").default
+        store.replaceReducer(nextCombineReducers)
+    })
+}
+
 
 export default store
